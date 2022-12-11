@@ -1,8 +1,9 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import type { GetServerSideProps, NextPage } from "next";
+import styles from "../styles/Home.module.css";
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,7 +18,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
 
@@ -60,12 +61,21 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
+// ### 서버 실행 환경 (SSR)
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // 서버에서는 모든 환경변수를 참조할 수 있다.
+  console.log(process.env.NODE_VALUE); // default_value
+  console.log(process.env.NEXT_PUBLIC_API_KEY); // default_api_key
+
+  return { props: { message: `Next.js is awesome` } };
+};
+export default Home;
